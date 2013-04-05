@@ -2,28 +2,24 @@
 
 cd
 cd .vim
-mkdir bundle
+mkdir bundle &>/dev/null
+mkdir autoload &>/dev/null
+rm .vimrc &>/dev/null
 
-git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+curl -Sso autoload/pathogen.vim https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
 
-echo <<END
-set nocompatible               " be iMproved
-filetype off                   " required!
+#cat > .vimrc <<END---
+#set nocompatible
+#
+#execute pathogen#infect()
+#
+#syntax on
+#
+#filetype plugin indent on
+#
+#END---
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-
-" let Vundle manage Vundle
-" required! 
-Bundle 'gmarik/vundle'
-
-" original repos on github
-Bundle 'tpope/vim-fugitive'
-Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
-Bundle 'tpope/vim-rails.git'
-
-" non github repos
-Bundle 'git://git.wincent.com/command-t.git'
-
-filetype plugin indent on     " required!
-END > .vimrc
+cd
+rm .vimrc
+ln -s .vim/.vimrc .vimrc
+cd .vim
