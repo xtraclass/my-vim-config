@@ -105,6 +105,7 @@ syntax enable
 
 " color scheme
 set t_Co=256
+hi Normal ctermbg=Black ctermfg=White
 set background=dark
 
 
@@ -217,12 +218,9 @@ set viminfo^=%
 set laststatus=2
 
 " Format the status line
-set statusline=%m%r\ %f\ %y\ \ %l/%c\ %P\%L\ 
+set statusline=%6l/%2c\ \ \ %3P\%L\ \ \ %r%{getcwd()}%h\ %{HasPaste()}\ \ %m%r\ %f\ %y
 
-"set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ Line:\ %l
-
-hi StatusLine ctermbg=Blue ctermfg=White
-hi StatusLineNC cterm=none
+hi StatusLine term=bold ctermbg=White ctermfg=Black
 
 
 
