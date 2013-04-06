@@ -69,6 +69,8 @@ let g:mapleader = "\<Space>"
 " Fast saving
 nnoremap <leader><Space> :w!<cr>
 
+set fileencodings=utf-8,latin1
+
 
 " """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " " => VIM user interface
@@ -134,7 +136,7 @@ set tm=500
 syntax enable
 
 "colorscheme desert
-set background=light
+set background=dark
 
 " """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
@@ -437,6 +439,35 @@ nnoremap <leader>u :GundoToggle<CR>
 "
 "[count]<leader>cu |NERDComUncommentLine|
 "Uncomments the selected line(s).
+
+
+
+" Reload .vimrc after save
+autocmd! bufwritepost .vimrc source %
+
+
+
+" ultisnips   http://www.vim.org/scripts/script.php?script_id=2715
+
+
+" If you've ever tried using the "." command after alugin map, you were likely disappointed to discover it only repeated the last native command inside that map, rather than the map as a whole.  That disappointment ends today.  Repeat.vim remaps "." in a way thatlugins can tap into it. 
+" 
+" Support is alreadyresent in the followinglugins: 
+" 
+" surround.vim (vimscript #1697) 
+" speeddating.vim (vimscript #2120) 
+" abolish.vim (vimscript #1545) 
+" unimpaired.vim (vimscript #1590) 
+" commentary.vim (vimscript #3695) 
+" 
+" Adding support to alugin is generally as simple as the following command at the end of your map functions. 
+" 
+"   silent! call repeat#set("\<Plug>MyWonderfulMap",v:count) 
+
+
+
+
+
 
 
 
