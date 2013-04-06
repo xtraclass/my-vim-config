@@ -5,6 +5,7 @@ call pathogen#helptags()
 
 
 
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Original version borrowed from Amir Salihefendic http://amix.dk - amix@amix.dk
 " http://amix.dk/blog/post/19691#The-ultimate-Vim-configuration-on-Github
@@ -26,11 +27,13 @@ set autoread
 
 " " With a map leader it's possible to do extra key combinations
 " " like <leader>w saves the current file
-let mapleader = "\<Space>"
-let g:mapleader = "\<Space>"
+"let mapleader = "\<Space>"
+"let g:mapleader = "\<Space>"
+let mapleader = ","
+let g:mapleader = ","
 
 " Fast saving
-nnoremap <leader><Space> :w!<cr>
+nnoremap <leader><leader> :w!<cr>
 
 set fileencodings=utf-8,latin1
 
@@ -98,8 +101,15 @@ set tm=500
 " " Enable syntax highlighting
 syntax enable
 
-"colorscheme desert
+
+
+" color scheme
+set t_Co=256
+"colorscheme lucius
+"LuciusBlack
 set background=dark
+
+
 
 " """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
@@ -151,7 +161,7 @@ noremap j gj
 noremap k gk
 
 " " Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
-noremap , /
+"noremap , /
 
 " " Disable highlight when <leader><cr> is pressed
 noremap <silent> <leader><cr> :noh<cr>
@@ -232,7 +242,7 @@ autocmd BufWrite *.coffee :call DeleteTrailingWS()
 set pastetoggle=<leader>p
 
 
-nnoremap , :
+"nnoremap , :
 
 
 " Use Q for formatting the current paragraph (or selection)
@@ -253,7 +263,7 @@ vnoremap <silent> gv :call VisualSelection('gv')<CR>
 noremap <leader>g :vimgrep // **/*.<left><left><left><left><left><left><left>
 
 " " Vimgreps in the current file
-noremap <leader>, :vimgrep <C-R>%<C-A><right><right><right><right><right><right><right><right><right>
+"noremap <leader>, :vimgrep <C-R>%<C-A><right><right><right><right><right><right><right><right><right>
 
 " " When you press <leader>r you can search and replace the selected text
 vnoremap <silent> <leader>r :call VisualSelection('replace')<CR>
@@ -303,10 +313,10 @@ noremap <leader>pp :setlocal paste!<cr>
 let g:clipbrdDefaultReg = '+'
 let MRU_Max_Entries = 100
 
-:nnoremap <C-N><C-N> :set invnumber<CR>
+nnoremap <C-N><C-N> :set invnumber<CR>
 
 " " But we don't always wanna wrap
-:nnoremap <C-w><C-w> :set invwrap<CR>
+nnoremap <C-w><C-w> :set invwrap<CR>
 
 " And all the cool kids need to paste
 :nnoremap <C-p><C-p> :set invpaste<CR>
@@ -320,9 +330,9 @@ function! ToggleSyntax()
 endfunction
 nmap <silent>  <leader>s  :call ToggleSyntax()<CR>
 
-:nnoremap <silent> <C-S> :if expand("%") == ""<CR>browse confirm w<CR>else<CR>confirm w<CR>endif<CR><CR>
-:inoremap <silent> <C-S> <ESC>:if expand("%") == ""<CR>browse confirm w<CR>else<CR>confirm w<CR>endif<CR>i<right>
-:vnoremap <silent> <C-S> :if expand("%") == ""<CR>browse confirm w<CR>else<CR>confirm w<CR>endif<CR><CR>
+nnoremap <silent> <C-S> :if expand("%") == ""<CR>browse confirm w<CR>else<CR>confirm w<CR>endif<CR><CR>
+inoremap <silent> <C-S> <ESC>:if expand("%") == ""<CR>browse confirm w<CR>else<CR>confirm w<CR>endif<CR>i<right>
+vnoremap <silent> <C-S> :if expand("%") == ""<CR>browse confirm w<CR>else<CR>confirm w<CR>endif<CR><CR>
 
 
 
@@ -432,6 +442,39 @@ autocmd! bufwritepost .vimrc source %
 
 nnoremap # '
 nnoremap - '
+
+
+
+nnoremap <C-.> :tag 
+
+
+
+
+" https://github.com/vim-scripts/Align
+" :5,10Align =
+
+
+
+" This unsets the "last searchattern" register by hitting return
+nnoremap <CR> :noh<CR><CR>
+
+
+
+
+" help statline
+"hi link User1 StatusLine
+"hi link User3 StatusLine
+
+
+
+" set cursorline
+
+
+
+" My starus line
+set statusline=%f%M%R
+hi StatusLine ctermbg=Blue ctermfg=White
+hi StatusLineNC cterm=none
 
 
 

@@ -10,3 +10,12 @@
 [submodule "bundle/vim-repeat"]
 	path = bundle/vim-repeat
 	url = https://github.com/tpope/vim-repeat.git
+[submodule "bundle/Align"]
+	path = bundle/Align
+	url = https://github.com/vim-scripts/Align.git
+[submodule "vim-statline"]
+	path = vim-statline
+	url = https://github.com/millermedeiros/vim-statline.git
+[submodule "bundle/vim-statline"]
+	path = bundle/vim-statline
+	url = https://github.com/millermedeiros/vim-statline.git
