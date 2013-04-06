@@ -267,6 +267,17 @@ endfunc
 autocmd BufWrite *.py :call DeleteTrailingWS()
 autocmd BufWrite *.coffee :call DeleteTrailingWS()
 
+set pastetoggle=<leader>p
+
+nnoremap , :
+
+" Use Q for formatting the currentaragraph (or selection)
+vnoremap Q gq
+nnoremap Q gqap
+
+cmap w!! w !sudo tee % >/dev/null
+
+
 
 " """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => vimgrep searching and cope displaying
@@ -348,6 +359,46 @@ nmap <silent>  ;s  :call ToggleSyntax()<CR>
 :nnoremap <silent> <C-S> :if expand("%") == ""<CR>browse confirm w<CR>else<CR>confirm w<CR>endif<CR><CR>
 :inoremap <silent> <C-S> <ESC>:if expand("%") == ""<CR>browse confirm w<CR>else<CR>confirm w<CR>endif<CR>i<right>
 :vnoremap <silent> <C-S> :if expand("%") == ""<CR>browse confirm w<CR>else<CR>confirm w<CR>endif<CR><CR>
+
+
+
+" Quick quit
+nnoremap <leader>q :q<CR>
+
+
+
+" Quickly edit/reload the vimrc file
+nnoremap <silent> <leader>ev :e $MYVIMRC<CR>
+nnoremap <silent> <leader>sv :so $MYVIMRC<CR>
+
+
+" :help NERD_tree.txt
+noremap <C-n> :NERDTreeToggle<CR>
+
+
+" :h yankring.txt 
+" :h yankring-tutorial 
+nnoremap <leader>y :YRShow<CR>
+
+
+" bufexplorer
+"  '\be' (normal open)  or 
+"    '\bs' (force horizontal split open)  or 
+"      '\bv' (force vertical split open) 
+
+
+" Gundo   http://sjl.bitbucket.org/gundo.vim/
+nnoremap <leader>u :GundoToggle<CR>
+
+
+" :help fugitive
+
+
+
+
+
+
+
 
 
 
