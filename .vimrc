@@ -430,6 +430,8 @@ autocmd! bufwritepost .vimrc source %
 
 
 
+nnoremap # '
+nnoremap - '
 
 
 
