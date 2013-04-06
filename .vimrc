@@ -6,45 +6,8 @@ call pathogen#helptags()
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Maintainer: 
-" "       Amir Salihefendic
-" "       http://amix.dk - amix@amix.dk
-" "
-" " Version: 
-" "       5.0 - 29/05/12 15:43:36
-" "
-" " Blog_post: 
-" "
+" Original version borrowed from Amir Salihefendic http://amix.dk - amix@amix.dk
 " http://amix.dk/blog/post/19691#The-ultimate-Vim-configuration-on-Github
-" "
-" " Awesome_version:
-" "       Get this config, nice color schemes and lots of plugins!
-" "
-" "       Install the awesome version from:
-" "
-" "           https://github.com/amix/vimrc
-" "
-" " Syntax_highlighted:
-" "       http://amix.dk/vim/vimrc.html
-" "
-" " Raw_version: 
-" "       http://amix.dk/vim/vimrc.txt
-" "
-" " Sections:
-" "    -> General
-" "    -> VIM user interface
-" "    -> Colors and Fonts
-" "    -> Files and backups
-" "    -> Text, tab and indent related
-" "    -> Visual mode related
-" "    -> Moving around, tabs and buffers
-" "    -> Status line
-" "    -> Editing mappings
-" "    -> vimgrep searching and cope displaying
-" "    -> Spell checking
-" "    -> Misc
-" "    -> Helper functions
-" "
 " """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -211,7 +174,7 @@ noremap <leader>tm :tabmove
 " Tab e for opening a tab, tab for jumping to tabs
 nnoremap <Tab> :tabn<Enter>
 nnoremap <S-Tab> :tabp<Enter>
-nnoremap ;<Tab> :tabe   
+nnoremap <leader><Tab> :tabe   
 
 " " Opens a new tab with the current buffer's path
 " " Super useful when editing files in the same directory
@@ -253,12 +216,6 @@ set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ Line:\ %l
 " " Remap VIM 0 to first non-blank character
 noremap 0 ^
 
-" " Move a line of text using ALT+[jk] or Comamnd+[jk] on mac
-nnoremap <M-j> mz:m+<cr>`z
-nnoremap <M-k> mz:m-2<cr>`z
-vnoremap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
-vnoremap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
-
 "         " Delete trailing white space on save, useful for Python and
 "         CoffeeScript ;)
 func! DeleteTrailingWS()
@@ -269,11 +226,14 @@ endfunc
 autocmd BufWrite *.py :call DeleteTrailingWS()
 autocmd BufWrite *.coffee :call DeleteTrailingWS()
 
+
 set pastetoggle=<leader>p
+
 
 nnoremap , :
 
-" Use Q for formatting the currentaragraph (or selection)
+
+" Use Q for formatting the current paragraph (or selection)
 vnoremap Q gq
 nnoremap Q gqap
 
@@ -356,7 +316,7 @@ function! ToggleSyntax()
     syntax enable
   endif
 endfunction
-nmap <silent>  ;s  :call ToggleSyntax()<CR>
+nmap <silent>  <leader>s  :call ToggleSyntax()<CR>
 
 :nnoremap <silent> <C-S> :if expand("%") == ""<CR>browse confirm w<CR>else<CR>confirm w<CR>endif<CR><CR>
 :inoremap <silent> <C-S> <ESC>:if expand("%") == ""<CR>browse confirm w<CR>else<CR>confirm w<CR>endif<CR>i<right>
@@ -366,16 +326,17 @@ nmap <silent>  ;s  :call ToggleSyntax()<CR>
 
 " Quick quit
 nnoremap <leader>q :q<CR>
+nnoremap <leader>c :q<CR>
+nnoremap <leader>_ :qa!<CR>
 
 
 
 " Quickly edit/reload the vimrc file
 nnoremap <silent> <leader>ev :e $MYVIMRC<CR>
-nnoremap <silent> <leader>sv :so $MYVIMRC<CR>
 
 
 " :help NERD_tree.txt
-noremap <C-n> :NERDTreeToggle<CR>
+noremap <C-t> :NERDTreeToggle<CR>
 
 
 " :h yankring.txt 
