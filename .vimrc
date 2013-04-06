@@ -131,6 +131,8 @@ set ai "Auto indent
 set si "Smart indent
 set wrap "Wrap lines
 
+set timeoutlen=1500
+
 
 " """"""""""""""""""""""""""""""
 " " => Visual mode related
@@ -327,7 +329,7 @@ nmap <silent>  <leader>s  :call ToggleSyntax()<CR>
 " Quick quit
 nnoremap <leader>q :q<CR>
 nnoremap <leader>c :q<CR>
-nnoremap <leader>_ :qa!<CR>
+nnoremap <leader>- :qa!<CR>
 
 
 
