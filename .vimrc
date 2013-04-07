@@ -218,7 +218,7 @@ set viminfo^=%
 set laststatus=2
 
 " Format the status line
-set statusline=%6l/%2c\ \ \ %3P\%L\ \ \ %r%{getcwd()}%h\ %{HasPaste()}\ \ %m%r\ %f\ %y
+set statusline=%6l/%2c\ \ \ %3P\%L\ \ \ %r%{getcwd()}%h\ %{HasPaste()}\ \ %m%r\ %f\ %y%=buf\ %n\ \ \ ch\ %4b\ %4B\ \ \ %6ob
 
 hi StatusLine term=bold ctermbg=White ctermfg=Black
 
@@ -442,8 +442,8 @@ autocmd! bufwritepost .vimrc source %
 
 
 
-nnoremap # '
-nnoremap - '
+nnoremap # `
+nnoremap - `
 
 
 
@@ -470,7 +470,6 @@ nnoremap <CR> :noh<CR><CR>
 
 
 " set cursorline
-
 
 
 
