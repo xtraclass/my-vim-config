@@ -226,7 +226,7 @@ set viminfo^=%
 set laststatus=2
 
 " Format the status line
-set statusline=%6l/%2c\ \ \ %3P\%L\ \ \ %r%{getcwd()}%h\ %{HasPaste()}\ \ %m%r\ %f\ %y%=buf\ %n\ \ \ ch\ %4b\ %4B\ \ \ %6ob
+set statusline=%6l/%2c\ \ \ %3P\%L\ \ \ %r%{getcwd()}%h\ %{HasPaste()}\ \ %m%r\ %f\ %y%=%{fugitive#statusline()}\ \ \ buf\ %n\ \ \ ch\ %4b\ %4B\ \ \ %6ob
 
 hi StatusLine term=bold ctermbg=White ctermfg=Black
 
@@ -348,8 +348,8 @@ vnoremap <silent> <C-S> :if expand("%") == ""<CR>browse confirm w<CR>else<CR>con
 
 " Quick quit
 nnoremap <leader>q :q<CR>
-nnoremap <leader>c :q<CR>
-nnoremap <leader>- :qa!<CR>
+nnoremap <leader>- :q<CR>
+nnoremap <leader>Q :qa!<CR>
 
 
 
@@ -494,6 +494,15 @@ let g:miniBufExplModSelTarget = 1
 
 nnoremap <leader>kt :TaskList<CR>
 nnoremap <leader>kp :TlistToggle<CR>
+
+
+
+
+nnoremap <leader>a <Esc>:!ack 
+
+
+
+
 
 
 
