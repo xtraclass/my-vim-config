@@ -22,6 +22,14 @@ set history=700
 filetype plugin on
 filetype indent on
 
+" :help new-omni-completion :help compl-omni
+set ofu=syntaxcomplete#Complete
+let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
+let g:SuperTabDefaultCompletionType = "context"
+autocmd FileType python set omnifunc=pythoncomplete#Complete
+
+
+
 " Set to auto read when a file is changed from the outside
 set autoread
 
@@ -244,14 +252,14 @@ autocmd BufWrite *.coffee :call DeleteTrailingWS()
 set pastetoggle=<leader>p
 
 
-"nnoremap , :
+"nnoremap <space> :
 
 
 " Use Q for formatting the current paragraph (or selection)
 vnoremap Q gq
 nnoremap Q gqap
 
-cmap w!! w !sudo tee % >/dev/null
+cnoremap w!! w !sudo tee % >/dev/null
 
 
 
@@ -473,8 +481,19 @@ nnoremap <CR> :noh<CR><CR>
 
 
 
+" :h taglist
 
 
+
+
+let g:miniBufExplMapWindowNavVim = 1
+let g:miniBufExplMapWindowNavArrows = 1
+let g:miniBufExplMapCTabSwitchBufs = 1
+let g:miniBufExplModSelTarget = 1
+
+
+nnoremap <leader>kt :TaskList<CR>
+nnoremap <leader>kp :TlistToggle<CR>
 
 
 
