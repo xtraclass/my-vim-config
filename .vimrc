@@ -1,20 +1,19 @@
-set nocompatible
+set nocompatible "First instruction
 
+" ======================================================================================
+" .vimrc file of Thomas Eichberger
+" ======================================================================================
+" 
+" Original version borrowed from Amir Salihefendic http://amix.dk - amix@amix.dk
+" http://amix.dk/blog/post/19691#The-ultimate-Vim-configuration-on-Github
+"
+" But finally changed and added a lot...
+" ======================================================================================
+
+" plugin helper
 execute pathogen#infect()
 call pathogen#helptags()
 
-
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Original version borrowed from Amir Salihefendic http://amix.dk - amix@amix.dk
-" http://amix.dk/blog/post/19691#The-ultimate-Vim-configuration-on-Github
-" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
-" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => General
-" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Sets how many lines of history VIM has to remember
 set history=700
 
@@ -26,29 +25,23 @@ filetype indent on
 set ofu=syntaxcomplete#Complete
 let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
 let g:SuperTabDefaultCompletionType = "context"
+
+" Python autocomplete
 autocmd FileType python set omnifunc=pythoncomplete#Complete
-
-
 
 " Set to auto read when a file is changed from the outside
 set autoread
 
-" With a map leader it's possible to do extra key combinations
-" like <leader>w saves the current file
-"let mapleader = "\<Space>"
-"let g:mapleader = "\<Space>"
-let mapleader = ","
-let g:mapleader = ","
+" mapleader
+let mapleader = "\<Space>"
+let maplocalleader = ","
 
 " Fast saving
 nnoremap <leader><leader> :w!<cr>
 
+" encoding
 set fileencodings=utf-8,latin1
 
-
-" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => VIM user interface
-" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Set 7 lines to the cursor - when moving vertically using j/k
 set so=7
 
@@ -61,6 +54,7 @@ set wildignore=*.o,*~,*.pyc
 " Always show current position
 set ruler
 
+" show line numers
 set number
 
 " Height of the command bar
@@ -102,34 +96,19 @@ set novisualbell
 set t_vb=
 set tm=500
 
-
-" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Colors and Fonts
-" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Enable syntax highlighting
 syntax enable
 
-
-
-" color scheme
+" color scheme or at least some color options
 set t_Co=256
-hi Normal ctermbg=Black ctermfg=White
-set background=dark
+hi Normal ctermbg=white ctermfg=black
+set background=light
 
-
-
-" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Files, backups and undo
-" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Turn backup off, since most stuff is in SVN, git et.c anyway...
 set nobackup
 set nowb
 set noswapfile
 
-
-" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Text, tab and indent related
-" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Use spaces instead of tabs
 set expandtab
 
@@ -150,30 +129,30 @@ set wrap "Wrap lines
 
 set timeoutlen=1500
 
-
-" """"""""""""""""""""""""""""""
-" => Visual mode related
-" """"""""""""""""""""""""""""""
 " Visual mode pressing * or # searches for the current selection
-" Super useful! From an idea by Michael Naumann
 vnoremap <silent> * :call VisualSelection('f')<CR>
 vnoremap <silent> # :call VisualSelection('b')<CR>
 
-
-" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Moving around, tabs, windows and buffers
-" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Treat long lines as break lines (useful when moving around in them)
 noremap j gj
 noremap k gk
 
-" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
-"noremap , /
+" Search key mapping
+nnoremap <leader>7 /
+nnoremap <leader>6 ?
+
+" Replace key mapping
+nnoremap <leader>8 <esc>:s,
+nnoremap <leader>9 <esc>:%s,
 
 " Disable highlight when <leader><cr> is pressed
 noremap <silent> <leader><cr> :noh<cr>
 
-" Smart way to move between windows
+" Move between windows
+noremap <leader><up> <C-W>j
+noremap <leader><down> <C-W>k
+noremap <leader><left> <C-W>h
+noremap <leader><right> <C-W>l
 noremap <C-j> <C-W>j
 noremap <C-k> <C-W>k
 noremap <C-h> <C-W>h
@@ -190,13 +169,14 @@ noremap <leader>tn :tabnew<cr>
 noremap <leader>to :tabonly<cr>
 noremap <leader>tc :tabclose<cr>
 noremap <leader>tm :tabmove
+
 " Tab e for opening a tab, tab for jumping to tabs
 nnoremap <Tab> :tabn<Enter>
 nnoremap <S-Tab> :tabp<Enter>
 nnoremap <leader><Tab> :tabe   
 
 " Opens a new tab with the current buffer's path
-" Super useful when editing files in the same directory
+" Useful when editing files in the same directory
 noremap <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 
 " Switch CWD to the directory of the open buffer
@@ -209,7 +189,7 @@ try
   catch
 endtry
 
-" Return to last edit position when opening files (You want this!)
+" Return to last edit position when opening files
 autocmd BufReadPost *
      \ if line("'\"") > 0 && line("'\"") <= line("$") |
      \   exe "normal! g`\"" |
@@ -218,28 +198,20 @@ autocmd BufReadPost *
 " Remember info about open buffers on close
 set viminfo^=%
 
-
-" """"""""""""""""""""""""""""""
-" => Status line
-" """"""""""""""""""""""""""""""
 " Always show the status line
 set laststatus=2
 
 " Format the status line
-set statusline=%6l/%2c\ \ \ %3P\%L\ \ \ %r%{getcwd()}%h\ %{HasPaste()}\ \ %m%r\ %f\ %y%=%{fugitive#statusline()}\ \ \ buf\ %n\ \ \ ch\ %4b\ %4B\ \ \ %6ob
+set statusline=%6l/%2c\ \ \ %3P\%L\ \ \ %r%{getcwd()}%h\ %{HasPaste()}\ \ %m%r\ %f\ %y\ \ \ Thomas%=%{fugitive#statusline()}\ \ \ buf\ %n\ \ \ ch\ %4b\ %4B\ \ \ %6ob
+hi StatusLine term=bold ctermbg=White ctermfg=Blue
 
-hi StatusLine term=bold ctermbg=White ctermfg=Black
-
-
-
-" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Editing mappings
-" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Remap VIM 0 to first non-blank character
 noremap 0 ^
 
-"         " Delete trailing white space on save, useful for Python and
-"         CoffeeScript ;)
+" Remap VIM ^ to first character of line
+noremap ^ 0
+
+" Delete trailing white space on save, useful for Python and CoffeeScript ;)
 func! DeleteTrailingWS()
     exe "normal mz"
     %s/\s\+$//ge
@@ -248,29 +220,44 @@ endfunc
 autocmd BufWrite *.py :call DeleteTrailingWS()
 autocmd BufWrite *.coffee :call DeleteTrailingWS()
 
-
-set pastetoggle=<leader>p
-
-
-"nnoremap <space> :
-
-
-" Use Q for formatting the current paragraph (or selection)
+" Use Q for formatting the current paragraph (or selection) 
 vnoremap Q gq
 nnoremap Q gqap
 
 cnoremap w!! w !sudo tee % >/dev/null
 
+" delete without yanking
+nnoremap <leader>d "_d
+vnoremap <leader>d "_d
 
+" replace currently selected text with default register without yanking it
+vnoremap <leader>p "_dP
 
-" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => vimgrep searching and cope displaying
-" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Delete until the end of line, but not including the last character
+nnoremap <c-d> v$hhdi
+
+" highlight current line and / or current column
+hi CursorLine   cterm=NONE ctermbg=lightgray ctermfg=black guibg=darkred guifg=white
+hi CursorColumn cterm=NONE ctermbg=lightgray ctermfg=black guibg=darkred guifg=white
+nnoremap <leader>,hh :set cursorline!<CR>
+nnoremap <leader>,hc :set cursorline! cursorcolumn!<CR>
+
+" Split
+nnoremap <leader>sa        :leftabove  vnew<CR>
+nnoremap <leader>sd        :rightbelow vnew<CR>
+nnoremap <leader>sw        :leftabove  new<CR>
+nnoremap <leader>sy        :rightbelow new<CR>
+nnoremap <leader>sx        :rightbelow new<CR>
+nnoremap <leader>s<left>   :leftabove  vnew<CR>
+nnoremap <leader>s<right>  :rightbelow vnew<CR>
+nnoremap <leader>s<up>     :leftabove  new<CR>
+nnoremap <leader>s<down>   :rightbelow new<CR>
+
 " When you press gv you vimgrep after the selected text
-vnoremap <silent> gv :call VisualSelection('gv')<CR>
+"vnoremap <silent> gv :call VisualSelection('gv')<CR>
 
 " Open vimgrep and put the cursor in the right position
-noremap <leader>g :vimgrep // **/*.<left><left><left><left><left><left><left>
+"noremap <leader>g :vimgrep // **/*.<left><left><left><left><left><left><left>
 
 " Vimgreps in the current file
 "noremap <leader>, :vimgrep <C-R>%<C-A><right><right><right><right><right><right><right><right><right>
@@ -278,8 +265,6 @@ noremap <leader>g :vimgrep // **/*.<left><left><left><left><left><left><left>
 " When you press <leader>r you can search and replace the selected text
 vnoremap <silent> <leader>r :call VisualSelection('replace')<CR>
 
-" Do :help cope if you are unsure what cope is. It's super useful!
-" "
 " When you search with vimgrep, display your results in cope by doing:
 "   <leader>cc
 " "
@@ -294,10 +279,6 @@ noremap <leader>co ggVGy:tabnew<cr>:set syntax=qf<cr>pgg
 noremap <leader>n :cn<cr>
 noremap <leader>p :cp<cr>
 
-
-" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Spell checking
-" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Pressing ,ss will toggle and untoggle spell checking
 noremap <leader>ss :setlocal spell!<cr>
 
@@ -307,15 +288,11 @@ noremap <leader>sp [s
 noremap <leader>sa zg
 noremap <leader>s? z=
 
-
-" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Misc
-" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Remove the Windows ^M - when the encodings gets messed up
-noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
+noremap <Leader>,m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 
 " Quickly open a buffer for scripbble
-noremap <leader>q :e ~/buffer<cr>
+noremap <leader>,q :e ~/buffer<cr>
 
 " Toggle paste mode on and off
 noremap <leader>pp :setlocal paste!<cr>
@@ -323,6 +300,7 @@ noremap <leader>pp :setlocal paste!<cr>
 let g:clipbrdDefaultReg = '+'
 let MRU_Max_Entries = 100
 
+" Show or hide line numbers
 nnoremap <C-N><C-N> :set invnumber<CR>
 
 " But we don't always wanna wrap
@@ -340,26 +318,22 @@ function! ToggleSyntax()
 endfunction
 nmap <silent>  <leader>s  :call ToggleSyntax()<CR>
 
+" Save filw
 nnoremap <silent> <C-S> :if expand("%") == ""<CR>browse confirm w<CR>else<CR>confirm w<CR>endif<CR><CR>
 inoremap <silent> <C-S> <ESC>:if expand("%") == ""<CR>browse confirm w<CR>else<CR>confirm w<CR>endif<CR>i<right>
 vnoremap <silent> <C-S> :if expand("%") == ""<CR>browse confirm w<CR>else<CR>confirm w<CR>endif<CR><CR>
 
-
-
 " Quick quit
 nnoremap <leader>q :q<CR>
 nnoremap <leader>- :q<CR>
-nnoremap <leader>Q :qa!<CR>
-
-
+nnoremap <leader>.. :wq<CR>
+nnoremap \ :qa!<CR>
 
 " Quickly edit/reload the vimrc file
 nnoremap <silent> <leader>ev :e $MYVIMRC<CR>
 
-
 " :help NERD_tree.txt
 noremap <C-t> :NERDTreeToggle<CR>
-
 
 " :h yankring.txt 
 " :h yankring-tutorial 
@@ -367,17 +341,15 @@ nnoremap <leader>y :YRShow<CR>
 
 
 " bufexplorer
-"  '\be' (normal open)  or 
-"    '\bs' (force horizontal split open)  or 
-"      '\bv' (force vertical split open) 
-
+" <leader>be (normal open)  or 
+" <leader>bs (force horizontal split open)  or 
+" <leader>bv (force vertical split open) 
 
 " Gundo   http://sjl.bitbucket.org/gundo.vim/
 nnoremap <leader>u :GundoToggle<CR>
 
-
 " :help fugitive
-
+"
 
 " nerdcommenter
 "
@@ -423,15 +395,10 @@ nnoremap <leader>u :GundoToggle<CR>
 "[count]<leader>cu |NERDComUncommentLine|
 "Uncomments the selected line(s).
 
-
-
 " Reload .vimrc after save
 autocmd! bufwritepost .vimrc source %
 
-
-
 " ultisnips   http://www.vim.org/scripts/script.php?script_id=2715
-
 
 " If you've ever tried using the "." command after alugin map, you were likely disappointed to discover it only repeated the last native command inside that map, rather than the map as a whole.  That disappointment ends today.  Repeat.vim remaps "." in a way thatlugins can tap into it. 
 " 
@@ -447,66 +414,68 @@ autocmd! bufwritepost .vimrc source %
 " 
 "   silent! call repeat#set("\<Plug>MyWonderfulMap",v:count) 
 
-
-
-
+" Jump to mark
 nnoremap # `
 nnoremap - `
 
-
-
 nnoremap <C-.> :tag 
-
-
-
 
 " https://github.com/vim-scripts/Align
 " :5,10Align =
 
-
-
 " This unsets the "last searchattern" register by hitting return
 nnoremap <CR> :noh<CR><CR>
 
-
-
-
-" help statline
-"hi link User1 StatusLine
-"hi link User3 StatusLine
-
-
-
-" set cursorline
-
-
-
 " :h taglist
 
-
-
-
-let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplMapWindowNavArrows = 1
 let g:miniBufExplMapCTabSwitchBufs = 1
 let g:miniBufExplModSelTarget = 1
 
-
 nnoremap <leader>kt :TaskList<CR>
 nnoremap <leader>kp :TlistToggle<CR>
 
-
-
-
+" Call ack
 nnoremap <leader>a <Esc>:!ack 
 
+" https://github.com/paradigm/TextObjectify.git
 
+" Instead of pressing <esc>
+inoremap jk <esc>
+inoremap kj <esc>
+  
+" Adds an empty line below, leaves insert mode
+nnoremap <localleader>l o<esc>
 
+" Adds an empty line below, adds a .vimrc comment sign
+nnoremap <localleader>v o" 
 
+" Use Alt-X to quickly switch between buffers, where X is the buffer number 1 to 9.
+map <M-1> :confirm :b1 <CR>
+map <M-2> :confirm :b2 <CR>
+map <M-3> :confirm :b3 <CR>
+map <M-4> :confirm :b4 <CR>
+map <M-5> :confirm :b5 <CR>
+map <M-6> :confirm :b6 <CR>
+map <M-7> :confirm :b7 <CR>
+map <M-8> :confirm :b8 <CR>
+map <M-9> :confirm :b9 <CR>
 
+" Cycle through buffers with <ALT><Left> and <ALT><Right>
+nmap <M-Left> :bprev<CR>
+nmap <M-Right> :bnext<CR>⁰
 
+" Under linux, the script above will copy the file path or filename to X Server clipboard (accessed by pressing the middle mouse button). To copy text to the Gnome Clipboard instead replace the following lines:
+"   nmap ,cs :let @*=expand("%")<CR>
+"     nmap ,cl :let @*=expand("%:p")<CR>
+" 
+"     with  * +
+nmap <localleader>cs :let @*=expand("%")<CR>
+nmap <localleader>cl :let @*=expand("%:p")<CR>
 
-
+" QAbbreviations  
+iabbrev ööte Thomas Eichberger
+iabbrev ööfu function
 
 " """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions
@@ -538,7 +507,6 @@ function! VisualSelection(direction) range
     let @" = l:saved_reg
 endfunction
 
-
 " Returns true if paste mode is enabled
 function! HasPaste()
     if &paste
@@ -551,4 +519,3 @@ endfunction
 command! Bclose call <SID>BufcloseCloseIt()
 function! <SID>BufcloseCloseIt()
 endfunction
-
