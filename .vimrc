@@ -477,9 +477,15 @@ nmap <localleader>cl :let @*=expand("%:p")<CR>
 iabbrev ööte Thomas Eichberger
 iabbrev ööfu function
 
-" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Helper functions
-" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Open file explorer
+nnoremap <leader>e :Sex<cr>
+
+
+
+" ==============================================================
+" Helper Functions
+" ==============================================================
+
 function! CmdLine(str)
     exe "menu Foo.Bar :" . a:str
     emenu Foo.Bar
