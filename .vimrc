@@ -14,33 +14,18 @@ set nocompatible "First instruction
 execute pathogen#infect()
 call pathogen#helptags()
 
-" Sets how many lines of history VIM has to remember
-set history=700
-
-" Enable filetype plugins
-filetype plugin on
-filetype indent on
-
-" :help new-omni-completion :help compl-omni
-set ofu=syntaxcomplete#Complete
-let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
-let g:SuperTabDefaultCompletionType = "context"
-
-" Python autocomplete
-autocmd FileType python set omnifunc=pythoncomplete#Complete
-
-" Set to auto read when a file is changed from the outside
-set autoread
-
 " mapleader
 let mapleader = "\<Space>"
 let maplocalleader = ","
 
-" Fast saving
-nnoremap <leader><leader> :w!<cr>
-
 " encoding
 set fileencodings=utf-8,latin1
+
+" Sets how many lines of history VIM has to remember
+set history=700
+
+" Set to auto read when a file is changed from the outside
+set autoread
 
 " Set 7 lines to the cursor - when moving vertically using j/k
 set so=7
@@ -96,8 +81,10 @@ set novisualbell
 set t_vb=
 set tm=500
 
-" Enable syntax highlighting
-syntax enable
+" :help new-omni-completion :help compl-omni
+set ofu=syntaxcomplete#Complete
+let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
+let g:SuperTabDefaultCompletionType = "context"
 
 " color scheme or at least some color options
 set t_Co=256
@@ -128,6 +115,46 @@ set si "Smart indent
 set wrap "Wrap lines
 
 set timeoutlen=1500
+
+" Specify the behavior when switching between buffers 
+try
+  set switchbuf=useopen,usetab,newtab
+  set stal=2
+  catch
+endtry
+
+" Remember info about open buffers on close
+set viminfo^=%
+
+" Always show the status line
+set laststatus=2
+
+" Format the status line
+set statusline=%6l/%2c\ \ \ %3P\%L\ \ \ %r%{getcwd()}%h\ %{HasPaste()}\ \ %m%r\ %f\ %y\ \ \ Thomas%=%{fugitive#statusline()}\ \ \ buf\ %n\ \ \ ch\ %4b\ %4B\ \ \ %6ob
+hi StatusLine term=bold ctermbg=White ctermfg=Blue
+
+let g:clipbrdDefaultReg = '+'
+let MRU_Max_Entries = 100
+
+let g:miniBufExplMapWindowNavArrows = 1
+let g:miniBufExplMapCTabSwitchBufs = 1
+let g:miniBufExplModSelTarget = 1
+
+" Enable syntax highlighting
+syntax enable
+
+" Enable filetype plugins
+filetype plugin on
+filetype indent on
+
+" Python autocomplete
+autocmd FileType python set omnifunc=pythoncomplete#Complete
+
+" Reload .vimrc after save
+autocmd! bufwritepost .vimrc source %
+
+" Fast saving
+nnoremap <leader><leader> :w!<cr>
 
 " Visual mode pressing * or # searches for the current selection
 vnoremap <silent> * :call VisualSelection('f')<CR>
@@ -182,28 +209,11 @@ noremap <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 " Switch CWD to the directory of the open buffer
 noremap <leader>cd :cd %:p:h<cr>:pwd<cr>
 
-" Specify the behavior when switching between buffers 
-try
-  set switchbuf=useopen,usetab,newtab
-  set stal=2
-  catch
-endtry
-
 " Return to last edit position when opening files
 autocmd BufReadPost *
      \ if line("'\"") > 0 && line("'\"") <= line("$") |
      \   exe "normal! g`\"" |
      \ endif
-
-" Remember info about open buffers on close
-set viminfo^=%
-
-" Always show the status line
-set laststatus=2
-
-" Format the status line
-set statusline=%6l/%2c\ \ \ %3P\%L\ \ \ %r%{getcwd()}%h\ %{HasPaste()}\ \ %m%r\ %f\ %y\ \ \ Thomas%=%{fugitive#statusline()}\ \ \ buf\ %n\ \ \ ch\ %4b\ %4B\ \ \ %6ob
-hi StatusLine term=bold ctermbg=White ctermfg=Blue
 
 " Remap VIM 0 to first non-blank character
 noremap 0 ^
@@ -212,11 +222,6 @@ noremap 0 ^
 noremap ^ 0
 
 " Delete trailing white space on save, useful for Python and CoffeeScript ;)
-func! DeleteTrailingWS()
-    exe "normal mz"
-    %s/\s\+$//ge
-    exe "normal `z"
-endfunc
 autocmd BufWrite *.py :call DeleteTrailingWS()
 autocmd BufWrite *.coffee :call DeleteTrailingWS()
 
@@ -297,9 +302,6 @@ noremap <leader>,q :e ~/buffer<cr>
 " Toggle paste mode on and off
 noremap <leader>pp :setlocal paste!<cr>
 
-let g:clipbrdDefaultReg = '+'
-let MRU_Max_Entries = 100
-
 " Show or hide line numbers
 nnoremap <C-N><C-N> :set invnumber<CR>
 
@@ -307,16 +309,9 @@ nnoremap <C-N><C-N> :set invnumber<CR>
 nnoremap <C-w><C-w> :set invwrap<CR>
 
 " And all the cool kids need to paste
-:nnoremap <C-p><C-p> :set invpaste<CR>
+nnoremap <C-p><C-p> :set invpaste<CR>
 
-function! ToggleSyntax()
-  if exists("g:syntax_on")
-    syntax off
-  else
-    syntax enable
-  endif
-endfunction
-nmap <silent>  <leader>s  :call ToggleSyntax()<CR>
+nnoremap <silent>  <leader>s  :call ToggleSyntax()<CR>
 
 " Save filw
 nnoremap <silent> <C-S> :if expand("%") == ""<CR>browse confirm w<CR>else<CR>confirm w<CR>endif<CR><CR>
@@ -339,7 +334,6 @@ noremap <C-t> :NERDTreeToggle<CR>
 " :h yankring-tutorial 
 nnoremap <leader>y :YRShow<CR>
 
-
 " bufexplorer
 " <leader>be (normal open)  or 
 " <leader>bs (force horizontal split open)  or 
@@ -347,9 +341,6 @@ nnoremap <leader>y :YRShow<CR>
 
 " Gundo   http://sjl.bitbucket.org/gundo.vim/
 nnoremap <leader>u :GundoToggle<CR>
-
-" :help fugitive
-"
 
 " nerdcommenter
 "
@@ -395,9 +386,6 @@ nnoremap <leader>u :GundoToggle<CR>
 "[count]<leader>cu |NERDComUncommentLine|
 "Uncomments the selected line(s).
 
-" Reload .vimrc after save
-autocmd! bufwritepost .vimrc source %
-
 " ultisnips   http://www.vim.org/scripts/script.php?script_id=2715
 
 " If you've ever tried using the "." command after alugin map, you were likely disappointed to discover it only repeated the last native command inside that map, rather than the map as a whole.  That disappointment ends today.  Repeat.vim remaps "." in a way thatlugins can tap into it. 
@@ -420,18 +408,10 @@ nnoremap - `
 
 nnoremap <C-.> :tag 
 
-" https://github.com/vim-scripts/Align
-" :5,10Align =
-
 " This unsets the "last searchattern" register by hitting return
 nnoremap <CR> :noh<CR><CR>
 
 " :h taglist
-
-let g:miniBufExplMapWindowNavArrows = 1
-let g:miniBufExplMapCTabSwitchBufs = 1
-let g:miniBufExplModSelTarget = 1
-
 nnoremap <leader>kt :TaskList<CR>
 nnoremap <leader>kp :TlistToggle<CR>
 
@@ -451,34 +431,39 @@ nnoremap <localleader>l o<esc>
 nnoremap <localleader>v o" 
 
 " Use Alt-X to quickly switch between buffers, where X is the buffer number 1 to 9.
-map <M-1> :confirm :b1 <CR>
-map <M-2> :confirm :b2 <CR>
-map <M-3> :confirm :b3 <CR>
-map <M-4> :confirm :b4 <CR>
-map <M-5> :confirm :b5 <CR>
-map <M-6> :confirm :b6 <CR>
-map <M-7> :confirm :b7 <CR>
-map <M-8> :confirm :b8 <CR>
-map <M-9> :confirm :b9 <CR>
+nnoremap <M-1> :confirm :b1 <CR>
+nnoremap <M-2> :confirm :b2 <CR>
+nnoremap <M-3> :confirm :b3 <CR>
+nnoremap <M-4> :confirm :b4 <CR>
+nnoremap <M-5> :confirm :b5 <CR>
+nnoremap <M-6> :confirm :b6 <CR>
+nnoremap <M-7> :confirm :b7 <CR>
+nnoremap <M-8> :confirm :b8 <CR>
+nnoremap <M-9> :confirm :b9 <CR>
 
 " Cycle through buffers with <ALT><Left> and <ALT><Right>
-nmap <M-Left> :bprev<CR>
-nmap <M-Right> :bnext<CR>⁰
+nnoremap <M-Left> :bprev<CR>
+nnoremap <M-Right> :bnext<CR>⁰
 
 " Under linux, the script above will copy the file path or filename to X Server clipboard (accessed by pressing the middle mouse button). To copy text to the Gnome Clipboard instead replace the following lines:
 "   nmap ,cs :let @*=expand("%")<CR>
 "     nmap ,cl :let @*=expand("%:p")<CR>
 " 
 "     with  * +
-nmap <localleader>cs :let @*=expand("%")<CR>
-nmap <localleader>cl :let @*=expand("%:p")<CR>
+nnoremap <localleader>cs :let @*=expand("%")<CR>
+nnoremap <localleader>cl :let @*=expand("%:p")<CR>
+
+" Open file explorer
+nnoremap <leader>e :Sex<cr>
 
 " QAbbreviations  
 iabbrev ööte Thomas Eichberger
 iabbrev ööfu function
 
-" Open file explorer
-nnoremap <leader>e :Sex<cr>
+" :help fugitive
+
+" https://github.com/vim-scripts/Align
+" :5,10Align =
 
 
 
@@ -525,3 +510,19 @@ endfunction
 command! Bclose call <SID>BufcloseCloseIt()
 function! <SID>BufcloseCloseIt()
 endfunction
+
+function! ToggleSyntax()
+  if exists("g:syntax_on")
+    syntax off
+  else
+    syntax enable
+  endif
+endfunction
+
+" Delete trailing white space on save, useful for Python and CoffeeScript ;)
+func! DeleteTrailingWS()
+    exe "normal mz"
+    %s/\s\+$//ge
+    exe "normal `z"
+endfunc
+
